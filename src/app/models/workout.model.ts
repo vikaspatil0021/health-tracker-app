@@ -1,9 +1,9 @@
 type Workouts = {
-    type: string,
+    type: "Cycling" | "Running" | "Swimming" | "Yoga",
     minutes: number
 }
 
-export type WorkoutData = {
+export type WorkoutDataModal = {
     id?: number,
     name: string,
     workouts: Workouts[]

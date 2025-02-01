@@ -1,4 +1,6 @@
-export const workoutData = [
+import { WorkoutDataModal } from "../models/workout.model";
+
+export const workoutData: WorkoutDataModal[] = [
     {
         id: 1,
         name: 'John Doe',

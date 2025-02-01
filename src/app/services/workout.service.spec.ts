@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { workoutData } from '../data/data';
-import { WorkoutData } from '../models/workout.model';
+import { WorkoutDataModal } from '../models/workout.model';
 
 import { WorkoutService } from './workout.service';
 
@@ -9,7 +9,9 @@ describe('WorkoutService', () => {
   let service: WorkoutService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [WorkoutService]
+    });
     service = TestBed.inject(WorkoutService);
   });
 
@@ -83,7 +85,7 @@ describe('WorkoutService', () => {
   //Test addition of new workout data
   it('should add a new workout successfully', () => {
 
-    const newWorkout: WorkoutData = {
+    const newWorkout: WorkoutDataModal = {
       name: 'Leg Day',
       workouts: [{ type: 'Cycling', minutes: 45 }]
     };
@@ -103,21 +105,24 @@ describe('WorkoutService', () => {
     expect(result?.length).toBe(3);
   });
 
-  // filtering tests cases
+  // Error on missing filter inputs
   it('should throw an error when no filters are provided', () => {
     expect(() => service.filterWorkouts(null, null, 1)).toThrowError('At least one filter must be provided: workout type or search name.');
   });
 
+  // Do not throw error if atleast one input provided
   it('should not throw an error when at least one filter is provided', () => {
     expect(() => service.filterWorkouts('cardio', null)).not.toThrow();
   });
 
+  //return empty array if no match is found
   it('should return an empty array when no workouts match filter criteria', () => {
 
     const result = service.filterWorkouts('Boxing', 'Nonexistent Name', 1);
     expect(result).toEqual([]);
   });
 
+  // filter data based on both inputs
   it('should filter by workout type and name correctly', () => {
 
     const result = service.filterWorkouts('Cycling', 'John', 1);
@@ -125,12 +130,14 @@ describe('WorkoutService', () => {
     expect(result[0].name).toBe('John Doe');
   });
 
+  //filter data based on workout type only
   it('should filter by workout type only', () => {
 
     const result = service.filterWorkouts('Running', null, 1);
     expect(result?.length).toBe(2);
   });
 
+  //filter data based on name only
   it('should filter by name only', () => {
 
     const result = service.filterWorkouts(null, 'Jane', 1);
@@ -138,6 +145,7 @@ describe('WorkoutService', () => {
     expect(result[0].name).toBe('Jane Smith');
   });
 
+  // return records based on pagination after filtering
   it("should return 4 data records based on pagination on page 4", () => {
     localStorage.clear();
 

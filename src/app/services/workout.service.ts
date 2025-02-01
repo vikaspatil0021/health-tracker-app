@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { workoutData } from '../data/data';
-import { WorkoutData } from '../models/workout.model';
+import { WorkoutDataModal } from '../models/workout.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,17 +11,17 @@ export class WorkoutService {
   private storageKey: string = 'workoutStorage';
 
   constructor() {
-    this.initializeWorkouts();
+    this.initializeData();
   }
 
   // Initialize workout data and currentId in localStorage if not already set
-  private initializeWorkouts() {
+  private initializeData() {
     const storedData = localStorage.getItem(this.storageKey);
 
     if (!storedData) {
       const initialData = {
         currentId: 4,
-        workoutData: workoutData
+        workoutData
       };
       localStorage.setItem(this.storageKey, JSON.stringify(initialData));
     }
@@ -34,13 +34,14 @@ export class WorkoutService {
   }
 
   // Helper method to set data in localStorage
-  public setStorageData(data: { currentId: number, workoutData: WorkoutData[] }) {
+  public setStorageData(data: { currentId: number, workoutData: WorkoutDataModal[] }) {
     localStorage.setItem(this.storageKey, JSON.stringify(data));
   }
 
   // Adds a new workout to localStorage
-  addWorkout(newWorkoutData: WorkoutData) {
+  addWorkout(newWorkoutData: WorkoutDataModal) {
     const storedData = this.getStorageData();
+    
     const workouts = storedData?.workoutData || [];
     let currentId = storedData?.currentId || 4;
 
@@ -91,7 +92,7 @@ export class WorkoutService {
     const data = this.getStorageData().workoutData;
 
     // Filter the workout data based on the provided filters
-    const filteredData = data?.filter((eachWorkOut: WorkoutData) => {
+    const filteredData = data?.filter((eachWorkOut: WorkoutDataModal) => {
 
       const workoutMatches = workoutType ?
         eachWorkOut.workouts.some(workout => workout.type.toLowerCase() === workoutType.toLowerCase())
