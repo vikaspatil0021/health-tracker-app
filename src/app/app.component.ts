@@ -1,11 +1,18 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+
+import { WorkoutFormComponent } from "./components/workout-form/workout-form.component";
+import { WorkoutListComponent } from "./components/workout-list/workout-list.component";
 
 @Component({
   selector: 'app-root',
-  imports: [],
+  imports: [
+    WorkoutFormComponent,
+    WorkoutListComponent
+],
   templateUrl: './app.component.html',
 })
+
+
 export class AppComponent {
-  title = 'health-tracker';
+
 }
