@@ -50,7 +50,7 @@ export class WorkoutService {
     }
 
     // Limit the number of records to 20
-    if (newWorkoutData.workouts.length >= 20) {
+    if (workoutData.length >= 20) {
       throw new Error('Maximum of 20 records allowed.');
     }
 
