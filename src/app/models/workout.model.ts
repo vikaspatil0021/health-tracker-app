@@ -13,9 +13,3 @@ export type StorageData = {
     currentId: number,
     workoutData: WorkoutDataModal[]
 }
-
-export type FilterWorkoutProps = {
-    workoutType: string;
-    searchName: string;
-    page: number;
-}

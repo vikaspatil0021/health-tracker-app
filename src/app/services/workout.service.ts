@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { workoutData } from '../data/data';
 
-import { FilterWorkoutProps, StorageData, WorkoutDataModal } from '../models/workout.model';
+import { StorageData, WorkoutDataModal } from '../models/workout.model';
 
 
 
@@ -75,25 +75,24 @@ export class WorkoutService {
     return workoutData.slice(start_index, start_index + 5);
   }
 
-  //filter workout based on workoutType and seaarchName
-  public filterWorkout({ page = 1, searchName, workoutType }: FilterWorkoutProps) {
+  // Filter workout based on workoutType and searchName
+  public filterWorkouts(workoutType: string | null, searchName: string | null, page: number = 1) {
 
     // Check if both parameters are not provided
-    if (!searchName && !workoutType) {
-      throw new Error("At least one filter must be provided: workout type or search name.")
+    if (!workoutType && !searchName) {
+      throw new Error('At least one filter must be provided: workout type or search name.');
     }
 
     const { workoutData } = this.getData() as StorageData;
 
-    const filteredData = workoutData.filter((each: WorkoutDataModal) => {
-      const isSearchNameTrue = searchName ? each.name.toLowerCase().includes(searchName.toLowerCase()) : true;
-      const isWorkoutTypeTrue = workoutType ? each.workouts.some(workout => workout.type.toLowerCase() === workoutType.toLowerCase()) : true;
+    const filteredData = workoutData?.filter((each: WorkoutDataModal) => {
+      const nameMatches = searchName ? each.name.toLowerCase().includes(searchName.toLowerCase()) : true;
+      const workoutMatches = workoutType ? each.workouts.some(workout => workout.type.toLowerCase() === workoutType.toLowerCase()) : true;
 
-      return isSearchNameTrue && isWorkoutTypeTrue;
+      return workoutMatches && nameMatches;
     });
 
-    const start_index = 5 * (page - 1);
-    
-    return filteredData.slice(start_index, start_index + 5);
+    const startIndex = (page - 1) * 5;
+    return filteredData?.slice(startIndex, startIndex + 5);
   }
 }
