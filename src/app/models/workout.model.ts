@@ -1,4 +1,4 @@
-type Workouts = {
+export type Workout = {
     type: "Cycling" | "Running" | "Swimming" | "Yoga",
     minutes: number
 }
@@ -6,10 +6,15 @@ type Workouts = {
 export type WorkoutDataModal = {
     id?: number,
     name: string,
-    workouts: Workouts[]
+    workouts: Workout[]
 }
 
 export type StorageData = {
     currentId: number,
     workoutData: WorkoutDataModal[]
+}
+
+export interface SelectOptions {
+    name: string;
+    code: "Cycling" | "Running" | "Swimming" | "Yoga";
 }

@@ -1,0 +1,87 @@
+<p-card header="Add Workout">
+  <form
+    [formGroup]="formGroup"
+    class="my-2 flex flex-col gap-4"
+    (ngSubmit)="handle_add_new_workout_data()"
+  >
+    <!-- User Name Input field -->
+    <p-floatlabel variant="on">
+      <input
+        pInputText
+        id="on_label"
+        autocomplete="off"
+        formControlName="user_name"
+        class="w-full"
+      />
+      <label for="on_label">User Name</label>
+    </p-floatlabel>
+
+    <!-- add workout type section -->
+    <div class="flex flex-col gap-4">
+      <div class="grid grid-cols-2 gap-2">
+        <!-- workout type select -->
+        <p-floatlabel variant="on">
+          <p-select
+            formControlName="selected_workout_type"
+            [options]="workoutOptions"
+            optionLabel="name"
+            class="w-full"
+          />
+          <label for="on_label" class="text-sm">Select Workout Type</label>
+        </p-floatlabel>
+
+        <!-- Workout minutes field -->
+        <p-floatlabel variant="on">
+          <input
+            type="number"
+            pInputText
+            id="on_label"
+            autocomplete="off"
+            formControlName="minutes"
+            class="w-full"
+          />
+          <label for="on_label">Minutes</label>
+        </p-floatlabel>
+      </div>
+
+      <button
+        pButton
+        type="button"
+        label="Add"
+        class="ms-auto"
+        (click)="handle_add_workout_type()"
+        [disabled]="
+          formGroup.get('selected_workout_type')?.invalid ||
+          formGroup.get('minutes')?.invalid ||
+          workoutTypes.length >= 4
+        "
+      ></button>
+    </div>
+
+    <!-- show all workout types -->
+    <div *ngIf="workoutTypes.length < 1" class="h-32"></div>
+    <div *ngIf="workoutTypes.length > 0" class="h-32">
+      <div
+        *ngFor="let workout of workoutTypes; let i = index"
+        class="grid grid-cols-4 py-1 items-center"
+      >
+        <span class="col-span-2">{{ workout.type }}</span>
+        <span class="col-span-1">{{ workout.minutes }}</span>
+        <span
+          class="col-span-1 ms-auto text-red-500 cursor-pointer"
+          (click)="handle_remove_workout_type(i)"
+          >remove</span
+        >
+      </div>
+    </div>
+
+    <button
+      pButton
+      type="submit"
+      label="Save Workout"
+      [disabled]="
+        formGroup.get('user_name')?.invalid || workoutTypes.length < 1
+      "
+    ></button>
+  </form>
+</p-card>

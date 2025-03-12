@@ -108,24 +108,24 @@ describe('WorkoutService', () => {
     expect(data2.length).toBe(2);
   })
 
-   // Test error on missing filter inputs
+   // Test error on missing filter inputs - filterWorkouts
   it('should throw an error when no filters are provided', () => {
     expect(() => service.filterWorkouts(null, null, 1)).toThrowError('At least one filter must be provided: workout type or search name.');
   });
 
-  // Test do not throw error if atleast one input provided
+  // Test do not throw error if atleast one input provided - filterWorkouts
   it('should not throw an error when at least one filter is provided', () => {
     expect(() => service.filterWorkouts('cardio', null)).not.toThrowError();
   });
 
-  // Test return empty array if no match is found
+  // Test return empty array if no match is found - filterWorkouts
   it('should return an empty array when no workouts match filter criteria', () => {
 
     const result = service.filterWorkouts('Boxing', 'Nonexistent Name', 1);
     expect(result).toEqual([]);
   });
 
-  // Test filter data based on both inputs
+  // Test filter data based on both inputs - filterWorkouts
   it('should filter by workout type and name correctly', () => {
 
     const result = service.filterWorkouts('Cycling', 'John', 1);
@@ -133,14 +133,14 @@ describe('WorkoutService', () => {
     expect(result[0].name).toBe('John Doe');
   });
 
-  // Test filter data based on workout type only
+  // Test filter data based on workout type only - filterWorkouts
   it('should filter by workout type only', () => {
 
     const result = service.filterWorkouts('Running', null, 1);
     expect(result?.length).toBe(2);
   });
 
-  // Test filter data based on name only
+  // Test filter data based on name only - filterWorkouts
   it('should filter by name only', () => {
 
     const result = service.filterWorkouts(null, 'Jane', 1);
@@ -148,7 +148,7 @@ describe('WorkoutService', () => {
     expect(result[0].name).toBe('Jane Smith');
   });
 
-  // return records based on pagination after filtering
+  // return records based on pagination after filtering - filterWorkouts
   it("should return 4 data records based on pagination on page 4", () => {
 
     for (let i = 4; i <= 20; i++) {

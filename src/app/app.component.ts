@@ -8,11 +8,14 @@ import { WorkoutListComponent } from "./components/workout-list/workout-list.com
   imports: [
     WorkoutFormComponent,
     WorkoutListComponent
-],
+  ],
   templateUrl: './app.component.html',
 })
 
 
 export class AppComponent {
 
+  constructor() {
+  
+  }
 }
