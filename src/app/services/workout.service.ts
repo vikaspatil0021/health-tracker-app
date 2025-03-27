@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 
 import { workoutData } from '../data/data';
 
+import { Subject } from 'rxjs';
+
 import { StorageData, WorkoutDataModal } from '../models/workout.model';
 
 
@@ -14,8 +16,13 @@ import { StorageData, WorkoutDataModal } from '../models/workout.model';
 export class WorkoutService {
   private storageKey: string = "workoutservice";
 
+  // Using Subject<void> to capture the addNewWorkout event so that updated data can reflected on the screen :)
+  public updateEvent$: Subject<void>;
+
   constructor() {
     this.initializeDefaultData();
+
+    this.updateEvent$ = new Subject<void>();
   }
 
   // Initialize workout data and currentId in localStorage if not already set
@@ -65,18 +72,19 @@ export class WorkoutService {
       workoutData
     });
 
+    this.updateEvent$.next();
   }
 
   // Get all workout based on page number
-  public getAllWorkout(page: number = 1) {
+  public getAllWorkout(page: number = 1, itemsPerPage: number = 5) {
     const { workoutData } = this.getData() as StorageData;
 
-    const start_index = 5 * (page - 1);
-    return workoutData.slice(start_index, start_index + 5);
+    const start_index = itemsPerPage * (page - 1);
+    return workoutData.slice(start_index, start_index + itemsPerPage);
   }
 
   // Filter workout based on workoutType and searchName
-  public filterWorkouts(workoutType: string | null, searchName: string | null, page: number = 1) {
+  public filterWorkouts(workoutType: string | null, searchName: string | null, page: number = 1, itemsPerPage: number = 5) {
 
     // Check if both parameters are not provided
     if (!workoutType && !searchName) {
@@ -92,7 +100,7 @@ export class WorkoutService {
       return workoutMatches && nameMatches;
     });
 
-    const startIndex = (page - 1) * 5;
-    return filteredData?.slice(startIndex, startIndex + 5);
+    const startIndex = (page - 1) * itemsPerPage;
+    return filteredData?.slice(startIndex, startIndex + itemsPerPage);
   }
 }

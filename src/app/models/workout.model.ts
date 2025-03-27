@@ -14,7 +14,12 @@ export type StorageData = {
     workoutData: WorkoutDataModal[]
 }
 
-export interface SelectOptions {
-    name: string;
+export type SelectOptions = {
+    name: "Cycling" | "Running" | "Swimming" | "Yoga";
     code: "Cycling" | "Running" | "Swimming" | "Yoga";
 }
+
+export type SelectionFilterOptions = {
+    name: "Cycling" | "Running" | "Swimming" | "Yoga" | "All";
+    code: "Cycling" | "Running" | "Swimming" | "Yoga" | "All";
+};
