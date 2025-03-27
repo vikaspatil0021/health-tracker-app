@@ -1,0 +1,71 @@
+<div>
+  <!-- Input and filter elements -->
+  <form [formGroup]="formGroup" class="flex justify-between">
+    <!-- Search keyword Input field -->
+    <p-floatlabel variant="on">
+      <input
+        pInputText
+        id="on_label"
+        autocomplete="off"
+        formControlName="search_keyword"
+        class="w-full"
+      />
+      <label for="on_label">Search</label>
+    </p-floatlabel>
+
+    <!-- filter workout type select -->
+    <p-floatlabel variant="on">
+      <p-select
+        formControlName="select_filter_value"
+        [options]="workout_filter_options"
+        optionLabel="name"
+        class="w-52"
+      />
+      <label for="on_label" class="text-sm">Select Workout Type</label>
+    </p-floatlabel>
+  </form>
+
+  <!-- Workout data display table -->
+  <div class="my-5">
+    <p-table
+      stripedRows
+      [value]="workOutData"
+      [tableStyle]="{ 'min-width': '50rem' }"
+    >
+      <ng-template #header>
+        <tr>
+          <th>Name</th>
+          <th>Workouts</th>
+          <th>No of Workouts</th>
+          <th>Total Minutes</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-eachData>
+        <tr>
+          <td>{{ eachData.name }}</td>
+          <td>
+            <span *ngFor="let workoutType of eachData.workouts; let i = index">
+              {{
+                workoutType.type +
+                  (i !== eachData.workouts.length - 1 ? "," : "")
+              }}
+            </span>
+          </td>
+          <td>{{ eachData.workouts.length }}</td>
+          <td>
+            {{ getTotalMinutes(eachData) }}
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <!-- Pagination  -->
+  <p-paginator
+    (onPageChange)="onPageChange($event)"
+    [first]="0"
+    [rows]="5"
+    [totalRecords]="totalRecords"
+    [rowsPerPageOptions]="[5, 10]"
+  />
+</div>
