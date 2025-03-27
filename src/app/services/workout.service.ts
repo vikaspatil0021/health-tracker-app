@@ -95,7 +95,7 @@ export class WorkoutService {
 
     const filteredData = workoutData?.filter((each: WorkoutDataModal) => {
       const nameMatches = searchName ? each.name.toLowerCase().includes(searchName.toLowerCase()) : true;
-      const workoutMatches = workoutType ? each.workouts.some(workout => workout.type.toLowerCase() === workoutType.toLowerCase()) : true;
+      const workoutMatches = workoutType && workoutType !== "All" ? each.workouts.some(workout => workout.type.toLowerCase() === workoutType.toLowerCase()) : true;
 
       return workoutMatches && nameMatches;
     });
