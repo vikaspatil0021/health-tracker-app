@@ -58,18 +58,36 @@ export class WorkoutListComponent {
     this.workoutService.updateEvent$.subscribe(() => {
       this.initailizeOrUpdateData();
     })
+
+    // filter data based on search_keyword and select_filter_value
+    this.formGroup.valueChanges.subscribe(({ search_keyword, select_filter_value }) => {
+      this.updateWorkoutDataonFilter(search_keyword, select_filter_value)
+    })
   }
 
+  // initailize or update when new workoutdata event is emitted 
   initailizeOrUpdateData() {
     this.totalRecords = this.workoutService.getData()?.workoutData.length as number;
     this.workOutData = this.workoutService.getAllWorkout(this.currentPage, this.itemsPerPage);
   }
 
+  // update workoutData based on change in either filters on pagination
+  updateWorkoutDataonFilter(search_keyword: string, select_filter_value: SelectionFilterOptions) {
+    
+    if (search_keyword !== "" || select_filter_value.code !== 'All')
+      this.workOutData = this.workoutService.filterWorkouts(select_filter_value.code, search_keyword, this.currentPage, this.itemsPerPage);
+    else
+      this.workOutData = this.workoutService.getAllWorkout(this.currentPage, this.itemsPerPage);
+  }
+
   onPageChange(event: PaginatorState) {
-    if (event.page !== undefined && event.rows != undefined) {
+    const { search_keyword, select_filter_value } = this.formGroup.value as { search_keyword: string, select_filter_value: SelectionFilterOptions };
+
+    if (event.page !== undefined && event.rows !== undefined) {
       this.currentPage = event.page + 1;
       this.itemsPerPage = event.rows as number;
-      this.workOutData = this.workoutService.getAllWorkout(event.page + 1, this.itemsPerPage);
+
+      this.updateWorkoutDataonFilter(search_keyword, select_filter_value)
     }
   }
 
