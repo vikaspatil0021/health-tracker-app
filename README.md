@@ -1,59 +1,66 @@
-# HealthTracker
+# Internship Challenge Round - Project
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.5.
+✅ I have successfully completed the **Internship Challenge Round Project**.
 
-## Development server
+## 🚀 Tech Stack Used
 
-To start a local development server, run:
+- **Angular**
+- **PrimeNG**
+- **Tailwind CSS**
 
-```bash
-ng serve
-```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### 🛠️ How to Run Locally
 
-## Code scaffolding
+1. **Clone the repository**
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+   ```bash
+   git clone https://github.com/vikaspatil0021/health-tracker-app.git
+   cd health-tracker-app
+   ```
 
-```bash
-ng generate component component-name
-```
+2. **Install dependencies**
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+   ```bash
+   npm install
+   ```
 
-```bash
-ng generate --help
-```
+3. **Start the development server**
 
-## Building
+   ```bash
+   npm run start
+   ```
 
-To build the project run:
+## 🧪 Testing & Code Coverage
 
-```bash
-ng build
-```
+- To run all tests and verify code coverage:
+  ```bash
+  npm run test
+  ```
+  ![Screenshot from 2025-06-22 14-41-54](https://github.com/user-attachments/assets/39ea91c2-313a-4aaa-9309-021bd2c98b0d)
+  ![Screenshot from 2025-06-22 14-48-42](https://github.com/user-attachments/assets/a50c0970-b54e-41f8-8e71-a33ee62b9e74)
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
-## Running unit tests
+- To run individual tests:
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+  * **Workout Service (test)**:
 
-```bash
-ng test
-```
+    ```bash
+    npm run tcs
+    ```
+    ![Screenshot from 2025-06-22 14-49-17](https://github.com/user-attachments/assets/1e939fbd-a2c8-4bbb-8e4b-33470e7dfad8)
 
-## Running end-to-end tests
+  * **Workout Form Component (test)**:
 
-For end-to-end (e2e) testing, run:
+    ```bash
+    npm run tcwf
+    ```
+    > Since this test uses `WorkoutService`, it's best to run all tests with `npm run test` to verify this component.
+ 
+    
+    ![Screenshot from 2025-06-22 14-52-18](https://github.com/user-attachments/assets/6aeedfac-abdb-48b9-a512-ae67d18283de)
+    
 
-```bash
-ng e2e
-```
+### 📸 Live Demo
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+[https://health-tracker-app-pink.vercel.app/](https://health-tracker-app-pink.vercel.app/)
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
